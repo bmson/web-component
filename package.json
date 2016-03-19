@@ -1,0 +1,29 @@
+{
+  "name": "WebComponents",
+  "version": "0.1.0",
+  "description": "Experimenting with Web Components",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "node server.js",
+    "init": "eslint --init",
+    "test": "eslint ./src/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bmson/web-component.git"
+  },
+  "keywords": [],
+  "author": "Baldvin Smarason <bmson@bmson.com>",
+  "licenses": "MIT",
+  "bugs": {
+    "url": "https://github.com/bmson/web-component/issues/"
+  },
+  "dependencies": {
+    "webcomponents.js": "0.7.x"
+  },
+  "devDependencies": {
+    "reqly": "x.x.x",
+    "babel-preset-es2015": "6.x.x",
+    "eslint": "x.x.x"
+  }
+}
