@@ -8,13 +8,39 @@
     <script src="./vendor/webcomponents.min.js"></script>
 
     <!-- Web components -->
-    <link rel="import" href="./components/component.html">
+    <link rel="import" href="./components/zendesk-editor/component.html">
+    <link rel="import" href="./components/zendesk-toolbar/component.html">
+
+    <!-- Styles -->
+    <style>
+
+      zendesk-editor,
+      zendesk-toolbar {
+        display: block;
+        width: 500px;
+      }
+
+      zendesk-toolbar {
+        margin-top: 2px;
+      }
+
+    </style>
   </head>
 
   <body>
 
     <!--webComponents-->
-    <custom-dom>This is a content</custom-dom>
+    <zendesk-editor for="zd-editor">
+      <b>Bold</b> title<br>
+      <i>this is <u>underlined</u> text</i>
+    </zendesk-editor>
+
+    <zendesk-toolbar id="zd-editor">
+      <button type="bold">B</button>
+      <button type="italic">I</button>
+      <button type="underline" class="on">U</button>
+      <button type="code">C</button>
+    </zendesk-toolbar>
 
   </body>
 </html>
