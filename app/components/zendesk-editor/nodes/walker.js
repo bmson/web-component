@@ -1,5 +1,5 @@
 // Dependencies
-import Trigger from './trigger';
+import Trigger from './../helpers/trigger';
 
 // Module definition
 export default class {
@@ -49,6 +49,7 @@ export default class {
     // Event listeners
     node.addEventListener('mouseup', callback);
     node.addEventListener('keyup', callback);
+    //node.addEventListener('blur', callback);
 
   }
 

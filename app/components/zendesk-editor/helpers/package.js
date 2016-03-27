@@ -31,8 +31,11 @@ export default class {
       const templateNode = document.importNode(template, true);
       shadowRoot.appendChild(templateNode);
 
+      // Get element attributes
+      const attributes = Array.from(this.attributes);
+
       // Callback
-      callback.call(this, shadowRoot, this.childNodes);
+      callback.call(this, shadowRoot, this.childNodes, attributes);
 
     };
 

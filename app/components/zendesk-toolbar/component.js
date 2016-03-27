@@ -1,18 +1,31 @@
 // Dependencies
-import { default as Package } from './helpers/package';
+import Package from './helpers/package';
 
 //
 const pkg = new Package('zendesk-toolbar');
 
 //
-pkg.register = (component, nodes) => {
+pkg.register = (component, children) => {
 
   //
   const content = component.getElementById('toolbar');
 
   //
-  [...nodes].forEach(node => {
+  [...children].forEach(node => {
     content.appendChild(node);
   });
+
+  //
+  pkg.activate = (e) => {
+
+    //
+    const selector = `[type=${e.key}]`;
+    const element = component.querySelector(selector);
+
+    //
+    element.classList.toggle('on', e.type);
+
+  };
+
 
 };
