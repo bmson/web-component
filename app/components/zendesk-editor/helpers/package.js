@@ -8,9 +8,10 @@ export default class {
 
     // Object properties
     const properties = {
-      'version':  { 'writable': false, 'configurable': false, 'value': '0.1.0' },
-      'name':     { 'writable': false, 'configurable': false, 'value': name },
-      'register': { 'set': this.register }
+      'version':    { 'writable': false, 'configurable': false, 'value': '0.1.0' },
+      'name':       { 'writable': false, 'configurable': false, 'value': name },
+      'extend':     { 'writable': false, 'configurable': false, 'value': Function.prototype },
+      'register':   { 'set': this.register }
     };
 
     // Create object
@@ -18,7 +19,7 @@ export default class {
 
   }
 
-  register(callback = Function.prototype) {
+  register(fn = Function.prototype) {
 
     this.createdCallback = function() {
 
@@ -32,10 +33,17 @@ export default class {
       shadowRoot.appendChild(templateNode);
 
       // Get element attributes
-      const attributes = Array.from(this.attributes);
+      const reducerFn = (result, item) => (result[item.name] = item.value) && result;
+      const attributes = [...this.attributes].reduce(reducerFn, {})
 
-      // Callback
-      callback.call(this, shadowRoot, this.childNodes, attributes);
+      // Extend shadowRoot
+      const shadowRootExtend = Object.create(shadowRoot, {
+        'childNodes': { 'writable': false, 'configurable': false, 'value': this.childNodes },
+        'attributes': { 'writable': false, 'configurable': false, 'value': attributes }
+      });
+
+      // Trigger callback
+      fn.call(this, shadowRootExtend);
 
     };
 

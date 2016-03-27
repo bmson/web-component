@@ -30,33 +30,16 @@
   <body>
 
     <!--webComponents-->
-    <zendesk-editor for="zd-editor">
+    <zendesk-editor id="zd-editor">
       <b>Bold</b> title<br>
       <i>this is <u>underlined</u> text</i>
     </zendesk-editor>
 
-    <zendesk-toolbar id="zd-editor">
+    <zendesk-toolbar for="zd-editor">
       <button type="B">B</button>
       <button type="I">I</button>
       <button type="U">U</button>
     </zendesk-toolbar>
-
-    <script>
-
-      /*
-      //
-      const editor  = document.querySelector('zendesk-editor');
-      const toolbar = document.querySelector('zendesk-toolbar');
-
-      toolbar.extend('code', e => {
-        return '<code>' + e.string + '</code>';
-      });
-
-      //
-      editor.addEventListener('focus', toolbar.setStatus);
-      */
-
-    </script>
 
   </body>
 </html>

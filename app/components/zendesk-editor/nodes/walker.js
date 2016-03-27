@@ -1,13 +1,7 @@
-// Dependencies
-import Trigger from './../helpers/trigger';
-
 // Module definition
 export default class {
 
   constructor(node) {
-
-    // Declare trigger
-    this.trigger = new Trigger();
 
     //
     let added   = [];
@@ -15,7 +9,7 @@ export default class {
     let state   = {};
 
     //
-    const callback = (e) => {
+    const getState = (e) => {
 
       //
       const keys = this.walkTree(node);
@@ -33,23 +27,50 @@ export default class {
       Object.keys(state).forEach(i => {
 
         //
-        const obj = {
-          'key': i,
-          'type': state[i]
-        }
+        this.createEvent(node, {
+          'nodeType': i,
+          'status': state[i]
+        });
+
+      });
+
+    };
+
+    const clearState = (e) => {
+
+      //
+      Object.keys(state).forEach(i => {
 
         //
-        this.trigger.transmit(i, obj);
-        this.trigger.transmit('*', obj);
+        this.createEvent(node, {
+          'nodeType': i,
+          'status': false
+        });
 
       });
 
     };
 
     // Event listeners
-    node.addEventListener('mouseup', callback);
-    node.addEventListener('keyup', callback);
-    //node.addEventListener('blur', callback);
+    node.addEventListener('mouseup', getState);
+    node.addEventListener('keyup', getState);
+    node.addEventListener('blur', clearState);
+
+    //
+    return node;
+
+  }
+
+  //
+  createEvent(node, detail) {
+
+    //
+    const customEvent = new CustomEvent('match', {
+      'detail': detail
+    });
+
+    //
+    node.dispatchEvent(customEvent);
 
   }
 
@@ -98,14 +119,6 @@ export default class {
       'removed': current.filter(x => match.indexOf(x) < 0),
       'added': match
     };
-
-  }
-
-
-  // Create events
-  match(name, callback) {
-
-    (this.trigger).register(...arguments);
 
   }
 

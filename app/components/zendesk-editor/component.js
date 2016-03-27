@@ -5,32 +5,43 @@ import Walker from './nodes/walker';
 //
 const pkg = new Package('zendesk-editor');
 
+/*
+pkg.extend('activate', (component, key, status) => {
+});
+
+pkg.extend('addPlugin', (component, fn) => {
+  //const manipulation = fn.call(this, selection);
+  //selection.replace(manipulation);
+});
+
+pkg.addEventListener('created', component => {
+});
+
+pkg.register();
+*/
+
 //
-pkg.register = (component, children, attributes) => {
+pkg.register = (component) => {
 
   //
   const content = component.getElementById('content');
 
   //
-  [...children].forEach(node => {
+  [...component.childNodes].forEach(node => {
     content.appendChild(node);
   });
 
   //
   content.setAttribute('contentEditable', true);
 
-
   //
-  const attribute = attributes.find(e => e.name === 'for');
-  const toolbar = document.getElementById(attribute.value);
+  const toolbar = document.querySelector(`[for=${component.attributes.id}]`);
 
   //
   const walker = new Walker(content);
 
-  if (toolbar) {
-    walker.match('B', e => toolbar.activate(e));
-    walker.match('I', e => toolbar.activate(e));
-    walker.match('U', e => toolbar.activate(e));
-  }
+  walker.addEventListener('match', e => {
+    toolbar.activate(e.detail.nodeType, e.detail.status);
+  });
 
 };

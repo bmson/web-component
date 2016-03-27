@@ -32,7 +32,8 @@ export default class {
       shadowRoot.appendChild(templateNode);
 
       // Get element attributes
-      const attributes = Array.from(this.attributes);
+      const reducer = (result, item) => (result[item.name] = item.value) && result;
+      const attributes = [...this.attributes].reduce(reducer, {})
 
       // Callback
       callback.call(this, shadowRoot, this.childNodes, attributes);
