@@ -5,13 +5,13 @@ import Package from './helpers/package';
 const pkg = new Package('zendesk-toolbar');
 
 //
-pkg.register = (component, children, attributes) => {
+pkg.register = (component) => {
 
   //
   const content = component.getElementById('toolbar');
 
   //
-  [...children].forEach(node => {
+  [...component.childNodes].forEach(node => {
     content.appendChild(node);
   });
 
