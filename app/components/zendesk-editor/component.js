@@ -4,9 +4,7 @@ import Worker from '@bmson/worker';
 import Walker from '@bmson/walker';
 
 //
-const pkg = new Package('zendesk-editor');
-
-pkg.addEventListener('created', component => {
+const onCreated = component => {
 
   //
   const content = component.getElementById('content');
@@ -29,7 +27,28 @@ pkg.addEventListener('created', component => {
     toolbar.activate(e.detail.nodeType, e.detail.status);
   });
 
-});
+};
+
+const getSelection = (component) => window.getSelection();
+
+const replaceSelection = (component, node) => {
+
+  //
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+
+  //
+  range.deleteContents();
+  range.insertNode(node);
+
+};
 
 //
-pkg.register();
+const pkg = new Package('zendesk-editor');
+
+//pkg.stylesheet('./component.css');
+pkg.addEventListener('created', onCreated);
+pkg.register({
+  'getSelection': getSelection,
+  'replaceSelection': replaceSelection
+});
