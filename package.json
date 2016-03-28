@@ -19,6 +19,9 @@
     "url": "https://github.com/bmson/web-component/issues/"
   },
   "dependencies": {
+    "@bmson/package": "0.x.x",
+    "@bmson/worker": "0.x.x",
+    "@bmson/walker": "0.x.x",
     "webcomponents.js": "0.7.x"
   },
   "devDependencies": {

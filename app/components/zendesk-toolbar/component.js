@@ -1,5 +1,5 @@
 // Dependencies
-import Package from './helpers/package';
+import Package from '@bmson/package';
 
 //
 const pkg = new Package('zendesk-toolbar');

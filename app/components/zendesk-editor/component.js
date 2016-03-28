@@ -1,6 +1,7 @@
 // Dependencies
-import Package from './helpers/package';
-import Walker from './nodes/walker';
+import Package from '@bmson/package';
+import Worker from '@bmson/worker';
+import Walker from '@bmson/walker';
 
 //
 const pkg = new Package('zendesk-editor');
