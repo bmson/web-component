@@ -5,7 +5,7 @@ import Package from './helpers/package';
 const pkg = new Package('zendesk-toolbar');
 
 //
-pkg.register = (component) => {
+pkg.addEventListener('created', component => {
 
   //
   const content = component.getElementById('toolbar');
@@ -15,8 +15,11 @@ pkg.register = (component) => {
     content.appendChild(node);
   });
 
-  //
-  pkg.activate = (key, status) => {
+});
+
+//
+pkg.register({
+  'activate': (component, key, status) => {
 
     //
     const selector = `[type=${key}]`;
@@ -25,7 +28,5 @@ pkg.register = (component) => {
     //
     element.classList.toggle('on', status);
 
-  };
-
-
-};
+  }
+});

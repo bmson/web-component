@@ -5,23 +5,7 @@ import Walker from './nodes/walker';
 //
 const pkg = new Package('zendesk-editor');
 
-/*
-pkg.extend('activate', (component, key, status) => {
-});
-
-pkg.extend('addPlugin', (component, fn) => {
-  //const manipulation = fn.call(this, selection);
-  //selection.replace(manipulation);
-});
-
 pkg.addEventListener('created', component => {
-});
-
-pkg.register();
-*/
-
-//
-pkg.register = (component) => {
 
   //
   const content = component.getElementById('content');
@@ -44,4 +28,7 @@ pkg.register = (component) => {
     toolbar.activate(e.detail.nodeType, e.detail.status);
   });
 
-};
+});
+
+//
+pkg.register();

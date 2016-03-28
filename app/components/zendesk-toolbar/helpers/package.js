@@ -4,14 +4,15 @@ const currentScript = document._currentScript || document.currentScript;
 // Module definition
 export default class {
 
-  constructor(name = 'zendesk') {
+  constructor(uid = 'zendesk') {
 
     // Object properties
     const properties = {
-      'version':    { 'writable': false, 'configurable': false, 'value': '0.1.0' },
-      'name':       { 'writable': false, 'configurable': false, 'value': name },
-      'extend':     { 'writable': false, 'configurable': false, 'value': Function.prototype },
-      'register':   { 'set': this.register }
+      '__uid':            { 'writable': false, 'configurable': false, 'value': uid },
+      '__event':          { 'writable': true,  'configurable': false, 'value': {} },
+      'addEventListener': { 'writable': false, 'configurable': false, 'value': this.addEventListener },
+      'extend':           { 'writable': false, 'configurable': false, 'value': this.extend },
+      'register':         { 'writable': false, 'configurable': false, 'value': this.register }
     };
 
     // Create object
@@ -19,21 +20,34 @@ export default class {
 
   }
 
-  register(fn = Function.prototype) {
+  // Store callback in __event object
+  addEventListener(name, fn) {
 
+    this.__event[name] = fn;
+
+  }
+
+  // Register package
+  register(extensions = {}) {
+
+    // Variables
+    const uid    = this.__uid;
+    const event  = this.__event;
+
+    // Create element callback
     this.createdCallback = function() {
 
       // Create shadow DOM and get content from <template>
-      const owner = currentScript.ownerDocument;
+      const owner      = currentScript.ownerDocument;
       const shadowRoot = this.createShadowRoot();
-      const template = owner.querySelector('template').content;
+      const template   = owner.querySelector('template').content;
 
       // Add a clone of <template> into shadow root
       const templateNode = document.importNode(template, true);
       shadowRoot.appendChild(templateNode);
 
       // Get element attributes
-      const reducerFn = (result, item) => (result[item.name] = item.value) && result;
+      const reducerFn  = (result, item) => (result[item.name] = item.value) && result;
       const attributes = [...this.attributes].reduce(reducerFn, {})
 
       // Extend shadowRoot
@@ -42,13 +56,25 @@ export default class {
         'attributes': { 'writable': false, 'configurable': false, 'value': attributes }
       });
 
+      // Create extensions
+      Object.keys(extensions).forEach(i => {
+
+        const exists = this.hasOwnProperty(name);
+
+        if (exists)
+          throw new Error('You can not overwrite attributes');
+        else
+          this[i] = (...args) => extensions[i].call(this, shadowRootExtend, ...args);
+
+      });
+
       // Trigger callback
-      fn.call(this, shadowRootExtend);
+      event.hasOwnProperty('created') && event.created.call(this, shadowRootExtend);
 
     };
 
     // Register element
-    document.registerElement(this.name, { 'prototype': this });
+    document.registerElement(uid, { 'prototype': this });
 
   }
 
