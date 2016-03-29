@@ -29,7 +29,21 @@ const onCreated = component => {
 
 };
 
-const getSelection = (component) => window.getSelection();
+const getSelection = (component) => {
+
+  //
+  const selection = window.getSelection();
+  const range = selection.getRangeAt(0);
+  const content = range.cloneContents();
+  const docFragment = document.createDocumentFragment();
+
+  //
+  docFragment.appendChild(content);
+
+  //
+  return docFragment;
+
+}
 
 const replaceSelection = (component, node) => {
 

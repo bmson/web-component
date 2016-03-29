@@ -6,6 +6,6 @@ export default (component, key, status) => {
   const element = component.querySelector(selector);
 
   //
-  element.classList.toggle('on', status);
+  element && element.classList.toggle('on', status);
 
 }

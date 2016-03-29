@@ -23,12 +23,12 @@ const onCreated = (component) => {
     if (target.nodeName === 'BUTTON') {
       const type = target.getAttribute('type');
       const selection = editor.getSelection();
-
-      const text = selection.toString();
-      const node = document.createTextNode(text);
       const elem = document.createElement(type);
 
-      elem.appendChild(node);
+      const children = selection.querySelectorAll(type);
+      console.log(children);
+
+      elem.appendChild(selection);
 
       editor.replaceSelection(elem);
 
