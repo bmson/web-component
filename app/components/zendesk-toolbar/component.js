@@ -7,6 +7,7 @@ import strong from './extensions/formatting/strong';
 import emphasis from './extensions/formatting/emphasis';
 import orderedList from './extensions/formatting/orderedList';
 import code from './extensions/formatting/code';
+import macro from './extensions/formatting/macro';
 
 //
 const onAttached = (component) => {
@@ -36,6 +37,7 @@ const onAttached = (component) => {
       case 'emphasis': emphasis(editor); break;
       case 'orderedList': orderedList(editor); break;
       case 'code': code(editor); break;
+      case 'macro': macro(editor); break;
     }
 
   });

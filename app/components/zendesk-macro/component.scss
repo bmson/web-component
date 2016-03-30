@@ -1,0 +1,17 @@
+#macro {
+  margin: 10px 0;
+  padding: 10px;
+
+  cursor: default;
+
+  font-family: sans-serif;
+  font-size: 12px;
+
+  background: rgb(240, 240, 240);
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 4px;
+
+  &::selection {
+    background: transparent;
+  }
+}
