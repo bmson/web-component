@@ -22,6 +22,15 @@ const onAttached = (component) => {
   //
   content.setAttribute('contentEditable', true);
 
+  /*
+  //
+  const walker = new Walker(content);
+
+  walker.subscribe('match', e => {
+    component.publish('match', e);
+  });
+  */
+
   //
   const selector = `[for=${component.attributes.id}]`;
   const toolbar = document.querySelector(selector);
@@ -41,6 +50,7 @@ const onAttached = (component) => {
 //
 const pkg = new Package('zendesk-editor');
 
+// pkg.subscribe('attached', onAttached);
 pkg.addListener('attached', onAttached);
 pkg.extend('getSelection', selection);
 pkg.extend('replaceSelection', replace);

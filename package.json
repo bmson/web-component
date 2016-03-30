@@ -1,7 +1,7 @@
 {
   "name": "WebComponents",
   "version": "0.1.0",
-  "description": "Experimenting with Web Components",
+  "description": "WYSIWYG Web Components",
   "main": "src/index.html",
   "scripts": {
     "start": "node server.js",
@@ -30,6 +30,6 @@
     "eslint": "x.x.x"
   },
   "engines": {
-    "node" "5.9.1"
+    "node": "5.9.1"
   }
 }

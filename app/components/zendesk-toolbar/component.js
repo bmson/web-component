@@ -24,7 +24,19 @@ const onAttached = (component) => {
   //
   const editor = document.getElementById(component.attributes.for);
 
+  /*
   //
+  editor.subscribe('match', e => {
+    toolbar.focus(e.nodeType, e.status);
+  });
+  */
+
+  /*
+  //
+  component.subscribe('click', e => {
+  });
+  */
+
   content.addEventListener('click', e => {
 
     //
@@ -47,5 +59,6 @@ const onAttached = (component) => {
 //
 const pkg = new Package('zendesk-toolbar');
 
+// pkg.subscribe('attached', onAttached);
 pkg.addListener('attached', onAttached);
 pkg.extend('focus', focus);
