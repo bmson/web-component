@@ -29,5 +29,7 @@
     "babel-preset-es2015": "6.x.x",
     "eslint": "x.x.x"
   },
-  "engine": "node 5.9.1"
+  "engines": {
+    "node" "5.9.1"
+  }
 }
