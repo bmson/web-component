@@ -2,11 +2,11 @@
 export default function () {
 
   //
-  const selection = window.getSelection();
+  const selection = (this.shadowRoot).getSelection();
 
   //
-  if (selection.isCollapsed)
-    return;
+  if (!selection.rangeCount)
+    return
 
   //
   const range = selection.getRangeAt(0);

@@ -2,7 +2,13 @@
 export default function (node) {
 
   //
-  const selection = window.getSelection();
+  const selection = (this.shadowRoot).getSelection();
+
+  //
+  if (!selection.rangeCount)
+    return;
+
+  //
   const range = selection.getRangeAt(0);
 
   //
