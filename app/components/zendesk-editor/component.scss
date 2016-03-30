@@ -14,4 +14,15 @@
     border: 2px solid rgb(0, 147, 209);
     box-shadow: inset 1px 1px 1px rgba(0, 0, 0, .25);
   }
+
+  code {
+    margin: 0 2px;
+    padding: 0 2px;
+
+    font-size: .9em;
+
+    background: rgb(240, 240, 240);
+    border: 1px solid rgb(230, 230, 230);
+    border-radius: 2px;
+  }
 }

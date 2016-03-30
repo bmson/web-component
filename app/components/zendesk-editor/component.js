@@ -1,13 +1,18 @@
-// Dependencies
+// Global dependencies
 import Package from '@bmson/package';
 import Worker from '@bmson/worker';
 import Walker from '@bmson/walker';
 
+// Local dependencies
+import selection from './extensions/selection';
+import replace from './extensions/replace';
+
 //
-const onCreated = component => {
+const onAttached = (component) => {
 
   //
-  const content = component.getElementById('content');
+  const shadowRoot = component.shadowRoot;
+  const content = shadowRoot.getElementById('content');
 
   //
   [...component.childNodes].forEach(node => {
@@ -18,51 +23,24 @@ const onCreated = component => {
   content.setAttribute('contentEditable', true);
 
   //
-  const toolbar = document.querySelector(`[for=${component.attributes.id}]`);
+  const selector = `[for=${component.attributes.id}]`;
+  const toolbar = document.querySelector(selector);
 
   //
   const walker = new Walker(content);
 
   walker.addEventListener('match', e => {
-    toolbar.activate(e.detail.nodeType, e.detail.status);
+
+    if (toolbar && toolbar.activate)
+      toolbar.focus(e.detail.nodeType, e.detail.status);
+
   });
-
-};
-
-const getSelection = (component) => {
-
-  //
-  const selection = window.getSelection();
-  const range = selection.getRangeAt(0);
-  const content = range.cloneContents();
-  const docFragment = document.createDocumentFragment();
-
-  //
-  docFragment.appendChild(content);
-
-  //
-  return docFragment;
-
-}
-
-const replaceSelection = (component, node) => {
-
-  //
-  const selection = window.getSelection();
-  const range = selection.getRangeAt(0);
-
-  //
-  range.deleteContents();
-  range.insertNode(node);
 
 };
 
 //
 const pkg = new Package('zendesk-editor');
 
-//pkg.stylesheet('./component.css');
-pkg.addEventListener('created', onCreated);
-pkg.register({
-  'getSelection': getSelection,
-  'replaceSelection': replaceSelection
-});
+pkg.addListener('attached', onAttached);
+pkg.extend('getSelection', selection);
+pkg.extend('replaceSelection', replace);
