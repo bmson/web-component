@@ -2,17 +2,17 @@
 export default function (node) {
 
   //
-  const selection = (this.shadowRoot).getSelection();
+  const selection = this.getSelection();
+
+var winSelect = window.getSelection();
 
   //
-  if (!selection.rangeCount)
-    return;
+  if (selection) {
+    selection.surroundContents(node);
 
-  //
-  const range = selection.getRangeAt(0);
+    winSelect.removeAllRanges();
+    winSelect.addRange(selection);
 
-  //
-  range.deleteContents();
-  range.insertNode(node);
+  } else return;
 
 }

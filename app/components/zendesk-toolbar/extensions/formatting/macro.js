@@ -3,9 +3,14 @@ export default function (editor) {
 
   //
   const selection = editor.getSelection();
+
+  //
   const element = document.createElement('zendesk-macro');
 
   //
-  editor.replaceSelection(element);
+  if (selection) {
+    selection.deleteContents();
+    selection.insertNode(element);
+  }
 
 }

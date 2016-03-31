@@ -5,18 +5,9 @@ export default function () {
   const selection = (this.shadowRoot).getSelection();
 
   //
-  if (!selection.rangeCount)
-    return
+  if (selection.rangeCount) {
+    return selection.getRangeAt(0);
 
-  //
-  const range = selection.getRangeAt(0);
-  const content = range.cloneContents();
-  const docFragment = document.createDocumentFragment();
-
-  //
-  docFragment.appendChild(content);
-
-  //
-  return docFragment;
+  } else return
 
 }
