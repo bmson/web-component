@@ -33,6 +33,19 @@ const onAttached = (component) => {
     constructor.publish('match', { 'nodeType': e.detail.nodeType, 'status': e.detail.status });
   });
 
+  //
+  var ws = new WebSocket('ws://localhost:3333/collaborate');
+
+  ws.onmessage = (e) => {
+    console.info(e.type, e.data);
+  }
+
+  ws.onopen = () => {
+    ws.send('Message to send');
+  };
+
+  ws.onclose = () => {}
+
 };
 
 //

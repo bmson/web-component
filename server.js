@@ -9,5 +9,6 @@ server.bridge('/webcomponents.js', __dirname + '/node_modules/webcomponents.js/w
 
 //
 server.ws('/collaborate', socket => {
-  socket.on('message', msg => socket.send(msg));
+  console.log('collaborate');
+  socket.on('response', msg => socket.send(msg));
 });
