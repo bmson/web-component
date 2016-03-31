@@ -13,10 +13,7 @@ import macro from './extensions/formatting/macro';
 const onAttached = (component) => {
 
   //
-  const constructor = component.constructor;
-  const shadowRoot = component.shadowRoot;
-  const attributes = component.attributes;
-  const childNodes = component.childNodes;
+  const {constructor, shadowRoot, attributes, childNodes} = component;
 
   //
   const content = shadowRoot.getElementById('toolbar');

@@ -11,10 +11,7 @@ import replace from './extensions/replace';
 const onAttached = (component) => {
 
   //
-  const constructor = component.constructor;
-  const shadowRoot = component.shadowRoot;
-  const attributes = component.attributes;
-  const childNodes = component.childNodes;
+  const {constructor, shadowRoot, childNodes} = component;
 
   //
   const content = shadowRoot.getElementById('content');
