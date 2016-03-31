@@ -11,38 +11,29 @@ import replace from './extensions/replace';
 const onAttached = (component) => {
 
   //
+  const constructor = component.constructor;
   const shadowRoot = component.shadowRoot;
+  const attributes = component.attributes;
+  const childNodes = component.childNodes;
+
+  //
   const content = shadowRoot.getElementById('content');
 
   //
-  [...component.childNodes].forEach(node => {
+  [...childNodes].forEach(node => {
     content.appendChild(node);
   });
 
   //
   content.setAttribute('contentEditable', true);
 
-  /*
   //
   const walker = new Walker(content);
 
-  walker.subscribe('match', e => {
-    component.publish('match', e);
-  });
-  */
-
-  //
-  const selector = `[for=${component.attributes.id}]`;
-  const toolbar = document.querySelector(selector);
-
-  //
-  const walker = new Walker(content);
-
+  // walker.subscribe('match', e => {
   walker.addEventListener('match', e => {
-
-    if (toolbar && toolbar.activate)
-      toolbar.focus(e.detail.nodeType, e.detail.status);
-
+    // component.publish('match', e);
+    constructor.publish('match', { 'nodeType': e.detail.nodeType, 'status': e.detail.status });
   });
 
 };
@@ -50,7 +41,6 @@ const onAttached = (component) => {
 //
 const pkg = new Package('zendesk-editor');
 
-// pkg.subscribe('attached', onAttached);
-pkg.addListener('attached', onAttached);
+pkg.subscribe('attached', onAttached);
 pkg.extend('getSelection', selection);
 pkg.extend('replaceSelection', replace);

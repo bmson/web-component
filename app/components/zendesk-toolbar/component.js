@@ -13,30 +13,27 @@ import macro from './extensions/formatting/macro';
 const onAttached = (component) => {
 
   //
+  const constructor = component.constructor;
   const shadowRoot = component.shadowRoot;
+  const attributes = component.attributes;
+  const childNodes = component.childNodes;
+
+  //
   const content = shadowRoot.getElementById('toolbar');
 
   //
-  [...component.childNodes].forEach(node => {
+  [...childNodes].forEach(node => {
     content.appendChild(node);
   });
 
   //
-  const editor = document.getElementById(component.attributes.for);
+  const editor = document.getElementById(attributes.for);
 
-  /*
-  //
   editor.subscribe('match', e => {
-    toolbar.focus(e.nodeType, e.status);
+    constructor.focus(e.nodeType, e.status);
   });
-  */
 
-  /*
-  //
-  component.subscribe('click', e => {
-  });
-  */
-
+  // component.subscribe('click', e => {
   content.addEventListener('click', e => {
 
     //
@@ -46,8 +43,8 @@ const onAttached = (component) => {
     //
     switch (type) {
       case 'strong': strong(editor); break;
-      case 'emphasis': emphasis(editor); break;
-      case 'orderedList': orderedList(editor); break;
+      case 'em': emphasis(editor); break;
+      case 'ol': orderedList(editor); break;
       case 'code': code(editor); break;
       case 'macro': macro(editor); break;
     }
@@ -59,6 +56,5 @@ const onAttached = (component) => {
 //
 const pkg = new Package('zendesk-toolbar');
 
-// pkg.subscribe('attached', onAttached);
-pkg.addListener('attached', onAttached);
+pkg.subscribe('attached', onAttached);
 pkg.extend('focus', focus);
