@@ -3,15 +3,14 @@ export default function (node) {
 
   //
   const selection = this.getSelection();
-
-var winSelect = window.getSelection();
+  const windowSelection = window.getSelection();
 
   //
   if (selection) {
     selection.surroundContents(node);
 
-    winSelect.removeAllRanges();
-    winSelect.addRange(selection);
+    windowSelection.removeAllRanges();
+    windowSelection.addRange(selection);
 
   } else return;
 
