@@ -1,6 +1,7 @@
 // Module defenition
 export default function (editor) {
 
+  /*
   //
   const selection = editor.getSelection();
 
@@ -12,5 +13,6 @@ export default function (editor) {
     selection.deleteContents();
     selection.insertNode(element);
   }
+  */
 
 }

@@ -4,8 +4,9 @@ import Worker from '@bmson/worker';
 import Walker from '@bmson/walker';
 
 // Local dependencies
-import selection from './extensions/selection';
+import range from './extensions/range';
 import replace from './extensions/replace';
+import cursor from './extensions/cursor';
 
 //
 const onAttached = (component) => {
@@ -34,17 +35,37 @@ const onAttached = (component) => {
   });
 
   //
-  var ws = new WebSocket('ws://localhost:3333/collaborate');
+  var ws = new WebSocket('ws://localhost:8080/5');
+  var username = Math.random().toString(36).substring(7);
 
   ws.onmessage = (e) => {
-    console.info(e.type, e.data);
+    console.info(JSON.parse(e.data));
   }
 
   ws.onopen = () => {
-    ws.send('Message to send');
+    ws.send(JSON.stringify({
+      'username': username,
+      'message': 'hello'
+    }));
   };
 
-  ws.onclose = () => {}
+  content.addEventListener('keyup', e => {
+
+    const position = cursor(content, shadowRoot);
+
+    ws.send(JSON.stringify({
+      'username': username,
+      'message': 'change',
+      'cursor': position,
+    }));
+  });
+
+  window.onbeforeunload = e => {
+    ws.send(JSON.stringify({
+      'username': username,
+      'message': 'bye'
+    }));
+  }
 
 };
 
@@ -52,5 +73,5 @@ const onAttached = (component) => {
 const pkg = new Package('zendesk-editor');
 
 pkg.subscribe('attached', onAttached);
-pkg.extend('getSelection', selection);
+pkg.extend('getRange', range);
 pkg.extend('replaceSelection', replace);

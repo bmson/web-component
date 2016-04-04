@@ -10,6 +10,15 @@ import code from './extensions/formatting/code';
 import macro from './extensions/formatting/macro';
 
 //
+const formats = {
+  'strong': strong,
+  'em': emphasis,
+  'ol': orderedList,
+  'code': code,
+  'macro': macro
+};
+
+//
 const onAttached = (component) => {
 
   //
@@ -34,17 +43,10 @@ const onAttached = (component) => {
   content.addEventListener('click', e => {
 
     //
-    const target = e.target;
-    const type = target.getAttribute('type');
+    const type = e.target.getAttribute('type');
 
     //
-    switch (type) {
-      case 'strong': strong(editor); break;
-      case 'em': emphasis(editor); break;
-      case 'ol': orderedList(editor); break;
-      case 'code': code(editor); break;
-      case 'macro': macro(editor); break;
-    }
+    formats[type].call(this, editor)
 
   });
 

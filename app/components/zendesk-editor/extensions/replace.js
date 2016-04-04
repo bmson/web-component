@@ -2,8 +2,11 @@
 export default function (node) {
 
   //
-  const selection = this.getSelection();
-  const windowSelection = window.getSelection();
+  const shadowRoot = this.shadowRoot;
+
+  //
+  const windowSelection = shadowRoot.getSelection();
+  const selection = windowSelection.getRangeAt(0);
 
   //
   if (selection) {

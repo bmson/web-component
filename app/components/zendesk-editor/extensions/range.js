@@ -2,7 +2,10 @@
 export default function () {
 
   //
-  const selection = (this.shadowRoot).getSelection();
+  const shadowRoot = this.shadowRoot;
+
+  //
+  const selection = shadowRoot.getSelection();
 
   //
   if (selection.rangeCount) {
